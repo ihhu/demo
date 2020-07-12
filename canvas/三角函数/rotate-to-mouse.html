@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas"  width="500" height="500" ></canvas>
+    <script src="../js/utils.js"></script>
+    <script src="../js/arrow.js"></script>
+    <script>
+        window.onload = function(){
+            const canvas = document.querySelector("#canvas");
+            const context = canvas.getContext("2d");
+            let centerX = canvas.width/2;
+            let centerY = canvas.height/2;
+            
+            let mouse = utils.captureMouse(canvas)
+            const arrow1 = new Arrow(centerX,centerY);
+            const arrow2 = new Arrow(centerX/2,centerY/2);
+
+            (function drawFrame(){
+                requestAnimationFrame(drawFrame);
+                context.clearRect(0,0,canvas.width,canvas.height);
+
+                arrow1.rotate = rotateToMouse(mouse.x,mouse.y,arrow1.x,arrow1.y);
+                arrow1.draw(context);
+
+                arrow2.rotate = rotateToMouse(mouse.x,mouse.y,arrow2.x,arrow2.y);                
+                arrow2.draw(context);
+                console.log(mouse);
+            })();
+        }
+    </script>
+</body>
+</html>

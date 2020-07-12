@@ -21,8 +21,8 @@ function draw() {
     context.fillStyle = wordColor;
     context.font = fontSize + "px arial";
     for (var i_1 = 0; i_1 < drops.length; i_1++) {
-        var text = wordsArr[Math.floor(Math.random() * wordsArr.length)];
-        context.fillText(text, i_1 * fontSize, drops[i_1] * fontSize);
+        var text_1 = wordsArr[Math.floor(Math.random() * wordsArr.length)];
+        context.fillText(text_1, i_1 * fontSize, drops[i_1] * fontSize);
         if (drops[i_1] * fontSize > h && Math.random() > .98) {
             drops[i_1] = 0;
         }

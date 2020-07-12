@@ -10,6 +10,7 @@ h = canvas.height = window.innerHeight;
 // 初始化
 // 
 let clearColor = "rgba(0,0,0,.05)";
+
 let wordColor = "#33ff33";//文字颜色
 let word = "0123456789qwertyuiopasdfghjklzxcvbnm,./;'\[]QWERTYUIOP{}ASDFGHJHJKL:ZXCVBBNM<>?"
 let wordsArr:string[] = word.split("");

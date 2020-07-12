@@ -1,4 +1,4 @@
-const canvas = <HTMLCanvasElement>document.querySelector("#canvas");
+const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
 const context = <CanvasRenderingContext2D>canvas.getContext("2d");
 let centerX:number = canvas.width/2;
 let centerY:number = canvas.height/2;

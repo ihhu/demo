@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500" ></canvas>
+    <script>
+        const canvas = document.querySelector("#canvas");
+        const context = canvas.getContext("2d");
+        let centerX = canvas.width/2;
+        let centerY = canvas.height/2;
+        let speed = 60;
+        let rad = Math.PI *2 / 60;
+        
+        // 画背景圈
+        // strokeStyle "#A5DEF1"
+        function whiteCircle(){
+            context.save();
+            context.beginPath();
+            context.strokeStyle="#A5DEF1";
+            context.lineWidth = 12;
+            context.arc(centerX,centerY,100,0,Math.PI*2,false);            
+            context.closePath();
+            context.stroke();
+        };
+        
+        // 画前景圈
+        // strokeStyle "#49f"
+        function blueCircle(speed){
+            let time = 60 - speed;
+            context.save();
+            context.beginPath();
+            context.strokeStyle = "#49f";
+            context.lineWidth = 12;
+            context.arc(centerX,centerY,100,-Math.PI/2,time*rad-Math.PI/2,false)
+            context.stroke();
+        }
+
+        // 画文字
+        // fillStyle "#F47C7C" font "bold 40px Arial"
+        function text(speed){
+            context.save();
+            context.fillStyle = "#F47C7C";
+            context.font = "bold 40px Arial";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillText(speed.toFixed(0)+"秒",centerX,centerY);
+        }
+
+        function drawCircleLoading(speed){
+            whiteCircle();
+            blueCircle(speed);  
+            text(speed);
+        }
+
+        (function drawFrame(){
+            window.requestAnimationFrame(drawFrame);
+            // window.cancelAnimationFrame
+
+            context.clearRect(0,0,canvas.width,canvas.height);
+
+            //drawCircleLoading
+            drawCircleLoading(speed);
+
+            speed= speed <= 0 ? 60 : speed=speed-0.1
+
+            
+            console.log("draw load run::", speed)
+        })();
+
+    </script>
+</body>
+</html>

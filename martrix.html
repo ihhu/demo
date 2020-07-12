@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>*{margin:0;padding:0;}body{overflow:hidden;}</style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.querySelector("#canvas");
+        const context = canvas.getContext("2d");
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+
+
+        let clearColor = "rgba(0,0,0,.05)";
+        let wordColor = "#33ff33";
+
+        let wordsArr =  "0123456789qwertyuiopasdfghjklzxcvbnm,./;'\[]QWERTYUIOP{}ASDFGHJHJKL:ZXCVBBNM<>?".split("");
+
+        let fontSize = 16;
+
+        let clumns = 0;
+        let drops = [];
+        
+        function initDrops(){
+            clumns = w / fontSize;
+            drops.length = 0;
+            for (let i =0;i<clumns; i++){
+                drops[i] = 1;
+            }
+        };
+
+        // 渲染动画
+        function draw(){
+            context.save();
+            context.fillStyle = wordColor;
+            context.font = `${fontSize}px Arial`;
+            
+            for(let i =0;i<drops.length;i++){
+                let text = wordsArr[Math.floor(Math.random()*drops.length)];
+                console.log(text)
+                context.fillText(text,fontSize * i,drops[i]*fontSize);
+                drops[i]++;
+
+                if(drops[i]*fontSize>h&&Math.random()>.98){
+                    drops[i] = 0; 
+                }
+            }
+        }
+
+        function drawFrame(){
+            window.requestAnimationFrame(drawFrame);
+            context.fillStyle = clearColor;
+            context.fillRect(0,0,w,h)
+            draw();
+        };
+
+        window.onload = function(){
+            initDrops();
+            drawFrame();
+        }
+        window.onresize = function(){
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+            initDrops();
+        }
+    </script>
+</body>
+</html>
