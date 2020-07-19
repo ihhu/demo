@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圆周与椭圆运动2</title>
+</head>
+<body>
+    <canvas id="canvas"  width="500" height="500" style="background:#000009;"></canvas>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/ball.js"></script>
+    <script>
+        window.onload = function(){
+            const canvas = document.querySelector("#canvas");
+            const context = canvas.getContext("2d");
+            // 中心点
+            let centerX = canvas.width/2;
+            let centerY = canvas.height/2;
+            
+            // 角度
+            let angleX = 0, angleY = 0;      
+            // 系数
+            let range = 80;
+            // 速度
+            let xSpeed = 0.05, ySpeed = 0.2;
+
+            const ball = new Ball({
+                x:centerX,
+                y:centerY
+            });
+             
+
+            (function drawFrame(){
+                requestAnimationFrame(drawFrame);
+                // 清空画布
+                context.clearRect(0,0,canvas.width,canvas.height);
+
+                // 运行核心
+                ball.x = centerX + Math.sin(angleX) * range*2;
+                ball.y = centerX + Math.cos(angleY) * range;
+                // 角度增加
+                angleX += xSpeed;
+                angleY += ySpeed;
+                
+                ball.draw(context);
+
+            })();
+        }
+    </script>
+</body>
+</html>

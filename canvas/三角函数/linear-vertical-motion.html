@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>线性运动</title>
+</head>
+<body>
+    <canvas id="canvas"  width="500" height="500" style="background:#000;"></canvas>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/ball.js"></script>
+    <script>
+        window.onload = function(){
+            const canvas = document.querySelector("#canvas");
+            const context = canvas.getContext("2d");
+            
+            // 中心点
+            let centerX = canvas.width/2;
+            let centerY = canvas.height/2;
+
+            // 角度
+            let angle = 0;      
+            // 系数
+            let range = 50;
+            // 速度
+            let xSpeed = 1.5,
+                ySpeed = .05;
+            
+            const ball = new Ball();
+             
+
+            (function drawFrame(){
+                requestAnimationFrame(drawFrame);
+                // 清空画布
+                context.clearRect(0,0,canvas.width,canvas.height);
+
+                // 运行核心
+                ball.x += xSpeed;
+                if(ball.x>canvas.width+ball.radius){
+                    ball.x = -ball.radius
+                }
+                // 垂直， 由于angle角度没发生变化，所以纵坐标保持不变
+                ball.y = centerY + Math.sin(angle) * range;
+                // angle += ySpeed; //加上就变成wave运动
+                
+                ball.draw(context);
+
+            })();
+        }
+    </script>
+</body>
+</html>

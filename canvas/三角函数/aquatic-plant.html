@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水草</title>
+    <style>*{padding:0;margin:0;}</style>
+</head>
+<body>
+    <canvas id="canvas" style="background:#5A92AF;"></canvas>
+    <script>
+        let oldTime = Date.now(), 
+            del = Date.now(), 
+            newTime = Date.now();
+
+        class Aqu{
+            constructor(color="#3b154e",num=80,amp = []){
+                this.startPoint = [];
+                this.endPointX = [];
+                this.endPointY = [];
+                this.amp = amp;
+                this.beta = 0;
+                this.color = color;
+                this.num = num;
+            }
+            init(){
+                for(let i =0;i<this.num;i++){
+                    this.startPoint[i] = Math.random()*20 + i*10;
+                    this.endPointX[i] = this.startPoint[i];
+                    this.endPointY[i] = canvas.height/2 - Math.random()*50;
+                    this.amp[i] = Math.random()*10 + 40;
+                }
+            }
+            draw(ctx){
+                ctx.save();
+                ctx.lineWidth = 14;
+                ctx.lineCap = "round";
+                ctx.globalAlpha = .8;
+                ctx.strokeStyle = this.color;
+
+                this.beta += del*0.0012;
+
+                var l = Math.sin(this.beta);
+
+                for(let i =0;i<this.num;i++){
+                    ctx.beginPath();
+
+                    ctx.moveTo(this.startPoint[i],canvas.height);
+                    // 设置结束x点
+                    this.endPointX[i] = this.startPoint[i] + l*this.amp[i];
+
+                    // 绘制二次贝赛尔曲线 
+                    // context.quadraticCurveTo(cpx,cpy,x,y);
+                    // cpx	贝塞尔控制点的 x 坐标。
+                    // cpy	贝塞尔控制点的 y 坐标。
+                    // x	结束点的 x 坐标。
+                    // y	结束点的 y 坐标。
+                    ctx.quadraticCurveTo(this.startPoint[i],canvas.height - 120,this.endPointX[i],this.endPointY[i]);
+
+                    ctx.stroke();
+                }
+                ctx.restore();
+            }
+        }
+
+        const canvas = document.querySelector("#canvas"),
+                ctx = canvas.getContext("2d");
+
+        canvas.height = 400;    
+        canvas.width = 800;
+        
+        const oAqu = new Aqu();
+        oAqu.init();
+        (function drawFrame(){
+            requestAnimationFrame(drawFrame);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+           
+            newTime = new Date().getTime();
+            del = new Date().getTime() - oldTime;
+            oldTime = newTime;
+           
+            oAqu.draw(ctx); 
+            console.log(oAqu.beta)
+       }())
+   
+    </script>
+</body>
+</html>

@@ -3,33 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>箭头跟随鼠标方向移动</title>
+    <title>平滑运行</title>
 </head>
 <body>
-    <canvas id="canvas"  width="500" height="500" ></canvas>
+    <canvas id="canvas"  width="500" height="500" style="background:#000009;"></canvas>
+
     <script src="../js/utils.js"></script>
-    <script src="../js/arrow.js"></script>
+    <script src="../js/ball.js"></script>
     <script>
         window.onload = function(){
             const canvas = document.querySelector("#canvas");
             const context = canvas.getContext("2d");
+            // 中心点
             let centerX = canvas.width/2;
             let centerY = canvas.height/2;
             
-            let mouse = utils.captureMouse(canvas)
-            const arrow1 = new Arrow(centerX,centerY);
-            const arrow2 = new Arrow(centerX/2,centerY/2);
+            // 角度
+            let angle = 0;      
+            // 系数
+            let range = 50;
+            // 速度
+            let speed = 0.1;
+
+            const ball = new Ball({
+                x:centerX,
+                y:centerY
+            });
+             
 
             (function drawFrame(){
                 requestAnimationFrame(drawFrame);
+                // 清空画布
                 context.clearRect(0,0,canvas.width,canvas.height);
 
-                arrow1.rotate = rotateToMouse(mouse.x,mouse.y,arrow1.x,arrow1.y);
-                arrow1.draw(context);
+                // 运行核心
+                ball.x = centerX + Math.sin(angle) * range;
+                angle += speed;
+                
+                ball.draw(context);
 
-                arrow2.rotate = rotateToMouse(mouse.x,mouse.y,arrow2.x,arrow2.y);                
-                arrow2.draw(context);
-                console.log(mouse);
             })();
         }
     </script>
