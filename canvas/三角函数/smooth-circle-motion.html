@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>平滑运行</title>
+    <title>平滑运动</title>
 </head>
 <body>
     <canvas id="canvas"  width="500" height="500" style="background:#000009;"></canvas>
@@ -20,10 +20,10 @@
             
             // 角度
             let angle = 0;      
-            // 系数
-            let range = 50;
+            // 振幅
+            let range = 150;
             // 速度
-            let speed = 0.1;
+            let speed = 0.05;
 
             const ball = new Ball({
                 x:centerX,
